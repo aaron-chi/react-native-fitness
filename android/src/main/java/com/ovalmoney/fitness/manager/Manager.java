@@ -65,6 +65,9 @@ public class Manager implements ActivityEventListener {
     private Promise promise;
 
     private static boolean isGooglePlayServicesAvailable(final Activity activity) {
+        if(activity == null) {
+            return false;
+        }
         GoogleApiAvailability googleApiAvailability = GoogleApiAvailability.getInstance();
         int status = googleApiAvailability.isGooglePlayServicesAvailable(activity);
         if(status != ConnectionResult.SUCCESS) {
@@ -234,6 +237,9 @@ public class Manager implements ActivityEventListener {
     }
 
     public void getSteps(Context context, double startDate, double endDate, String customInterval, final Promise promise){
+        if(context == null) {
+            return;
+        }
         DataSource ESTIMATED_STEP_DELTAS = new DataSource.Builder()
                 .setDataType(DataType.TYPE_STEP_COUNT_DELTA)
                 .setType(DataSource.TYPE_DERIVED)
@@ -248,8 +254,11 @@ public class Manager implements ActivityEventListener {
                 .bucketByTime(1, interval)
                 .setTimeRange((long) startDate, (long) endDate, TimeUnit.MILLISECONDS)
                 .build();
-
-        Fitness.getHistoryClient(context, GoogleSignIn.getLastSignedInAccount(context))
+        GoogleSignInAccount signInAccount = GoogleSignIn.getLastSignedInAccount(context);
+        if(signInAccount == null) {
+            return;
+        }
+        Fitness.getHistoryClient(context, signInAccount)
                 .readData(readRequest)
                 .addOnSuccessListener(new OnSuccessListener<DataReadResponse>() {
                     @Override
@@ -280,6 +289,9 @@ public class Manager implements ActivityEventListener {
     }
 
     public void getDistances(Context context, double startDate, double endDate, String customInterval, final Promise promise) {
+        if(context == null) {
+            return;
+        }
         TimeUnit interval = getInterval(customInterval);
 
         DataReadRequest readRequest = new DataReadRequest.Builder()
@@ -287,8 +299,11 @@ public class Manager implements ActivityEventListener {
                 .bucketByTime(1, interval)
                 .setTimeRange((long) startDate, (long) endDate, TimeUnit.MILLISECONDS)
                 .build();
-
-        Fitness.getHistoryClient(context, GoogleSignIn.getLastSignedInAccount(context))
+        GoogleSignInAccount signInAccount = GoogleSignIn.getLastSignedInAccount(context);
+        if(signInAccount == null) {
+            return;
+        }
+        Fitness.getHistoryClient(context, signInAccount)
                 .readData(readRequest)
                 .addOnSuccessListener(new OnSuccessListener<DataReadResponse>() {
                     @Override
@@ -319,6 +334,9 @@ public class Manager implements ActivityEventListener {
     }
 
     public void getCalories(Context context, double startDate, double endDate, String customInterval, final Promise promise) {
+        if(context == null) {
+            return;
+        }
         TimeUnit interval = getInterval(customInterval);
 
         DataReadRequest readRequest = new DataReadRequest.Builder()
@@ -326,8 +344,11 @@ public class Manager implements ActivityEventListener {
                 .bucketByTime(1, interval)
                 .setTimeRange((long) startDate, (long) endDate, TimeUnit.MILLISECONDS)
                 .build();
-
-        Fitness.getHistoryClient(context, GoogleSignIn.getLastSignedInAccount(context))
+        GoogleSignInAccount signInAccount = GoogleSignIn.getLastSignedInAccount(context);
+        if(signInAccount == null) {
+            return;
+        }
+        Fitness.getHistoryClient(context, signInAccount)
                 .readData(readRequest)
                 .addOnSuccessListener(new OnSuccessListener<DataReadResponse>() {
                     @Override
@@ -358,6 +379,9 @@ public class Manager implements ActivityEventListener {
     }
 
      public void getHeartRate(Context context, double startDate, double endDate, String customInterval,final Promise promise) {
+        if(context == null) {
+            return;
+        }
         TimeUnit interval = getInterval(customInterval);
 
         DataReadRequest readRequest = new DataReadRequest.Builder()
@@ -365,8 +389,11 @@ public class Manager implements ActivityEventListener {
                 .bucketByTime(1, interval)
                 .setTimeRange((long) startDate, (long) endDate, TimeUnit.MILLISECONDS)
                 .build();
-
-        Fitness.getHistoryClient(context, GoogleSignIn.getLastSignedInAccount(context))
+        GoogleSignInAccount signInAccount = GoogleSignIn.getLastSignedInAccount(context);
+        if(signInAccount == null) {
+            return;
+        }
+        Fitness.getHistoryClient(context, signInAccount)
                 .readData(readRequest)
                 .addOnSuccessListener(new OnSuccessListener<DataReadResponse>() {
                     @Override
@@ -398,6 +425,9 @@ public class Manager implements ActivityEventListener {
 
     @RequiresApi(api = Build.VERSION_CODES.N)
     public void getSleepAnalysis(Context context, double startDate, double endDate, final Promise promise) {
+        if(context == null) {
+            return;
+        }
         if (android.os.Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.N){
             promise.reject(String.valueOf(FitnessError.ERROR_METHOD_NOT_AVAILABLE), "Method not available");
             return;
@@ -408,8 +438,11 @@ public class Manager implements ActivityEventListener {
                 .read(DataType.TYPE_ACTIVITY_SEGMENT)
                 .setTimeInterval((long) startDate, (long) endDate, TimeUnit.MILLISECONDS)
                 .build();
-
-        Fitness.getSessionsClient(context, GoogleSignIn.getLastSignedInAccount(context))
+        GoogleSignInAccount signInAccount = GoogleSignIn.getLastSignedInAccount(context);
+        if(signInAccount == null) {
+            return;
+        }
+        Fitness.getSessionsClient(context, signInAccount)
                 .readSession(request)
                 .addOnSuccessListener(new OnSuccessListener<SessionReadResponse>() {
                     @Override
