@@ -8,15 +8,15 @@ We're open to receive PRs that contains new features or improvements, so feel fr
 
 ## Getting started
 
-`npm install @ovalmoney/react-native-fitness --save`
+`npm install aaron-chi/react-native-fitness --save`
 
 or
 
-`yarn add @ovalmoney/react-native-fitness`
+`yarn add aaron-chi/react-native-fitness`
 
 ### Mostly automatic installation
 
-`react-native link @ovalmoney/react-native-fitness`
+`react-native link aaron-chi/react-native-fitness`
 
 ### Manual installation
 
