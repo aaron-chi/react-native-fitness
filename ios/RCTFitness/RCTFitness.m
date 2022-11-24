@@ -109,7 +109,6 @@ RCT_REMAP_METHOD(requestPermissions,
         [self handlePermissions:permissions returnBlock: ^(NSSet *readPerms, NSSet* sharePerms){
             [self.healthStore requestAuthorizationToShareTypes:sharePerms readTypes:readPerms completion:^(BOOL success, NSError *error) {
                 if (!success) {
-                    NSError * error = [RCTFitness createErrorWithCode:ErrorEmptyPermissions andDescription:RCT_ERROR_NO_EVENTS];
                     [RCTFitness handleRejectBlock:reject error:error];
                     return;
                 }
@@ -189,7 +188,6 @@ RCT_REMAP_METHOD(getSteps,
     ^(HKStatisticsCollectionQuery *query, HKStatisticsCollection *results, NSError *error) {
         
         if (error) {
-            NSError * error = [RCTFitness createErrorWithCode:ErrorNoEvents andDescription:RCT_ERROR_NO_EVENTS];
             [RCTFitness handleRejectBlock:reject error:error];
             return;
         }
