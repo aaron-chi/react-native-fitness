@@ -186,10 +186,12 @@ public class Manager implements ActivityEventListener {
         }
 
     public void disconnect(@NonNull Activity currentActivity, final Promise promise) {
-        Fitness.getConfigClient(
-            currentActivity,
-            GoogleSignIn.getLastSignedInAccount(currentActivity.getApplicationContext()
-            ))
+        GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(currentActivity.getApplicationContext());
+        if(account == null){
+            promise.resolve(false);
+            return;
+        }
+        Fitness.getConfigClient(currentActivity, account)
           .disableFit()
           .addOnCanceledListener(new OnCanceledListener() {
             @Override
